@@ -14,80 +14,92 @@ def search_files(folder_path, keyword):
 
 
 def run_file_finder(folder_path, keyword):
-    search_results = search_files(folder_path, keyword)
+    if keyword:
+        search_results = search_files(folder_path, keyword)
+    else :
+        result_text.delete(1.0, tk.END) 
+        result_text.insert(tk.END, "*** Please enter a keyword ***")
 
-    if search_results:
-        result_text.delete(1.0, tk.END)  # Clear previous results
-        result_text.insert(tk.END, "Search results:\n")
-        for result in search_results:
-            result_text.insert(tk.END, result + "\n")
-    else:
-        result_text.delete(1.0, tk.END)  # Clear previous results
-        result_text.insert(tk.END, "No matching files found.")
+    if os.path.exists(folder_path) :
+        if search_results:
+            result_text.delete(1.0, tk.END) 
+            result_text.insert(tk.END, "Search results:\n")
+            for result in search_results:
+                result_text.insert(tk.END, result + "\n")
+        else:
+            result_text.delete(1.0, tk.END)
+            result_text.insert(tk.END, "No matching files found.")
 
-
-
-# Window
-window = ttk.Window(themename='flatly')
-window.title('Moteur de recherche')
-window.geometry('800x700')
-window.resizable(True, True) 
-
-
-# Logo frame
-logo_frame = tk.Frame(window, width=800, height=70)
-logo_frame.grid(row=0, column=0)
-logo_frame.pack_propagate(False)
-logo_widget = tk.Label(logo_frame, text='File Finder', font=("Times", 30) )
-logo_widget.pack()
+    else: 
+        result_text.delete(1.0, tk.END)
+        result_text.insert(tk.END, "*** Please enter a valide path ***")
 
 
-# Image
-# script_dir = os.path.dirname(__file__) if "__file__" in locals() else os.getcwd()
-# image_path = os.path.join(script_dir, "folder.png")
-# original_image = Image.open('folder.png')
-
-# desired_size = (100, 100) 
-# resized_image = original_image.resize(desired_size)
-# logo_img = ImageTk.PhotoImage(resized_image)
-
-# logo_widget = tk.Label(logo_frame, image=logo_img)
-# logo_widget.image = logo_img
-# logo_widget.pack()
 
 
-# Input frame
-input_frame = ttk.Frame(master=window)
+if __name__ == "__main__":
 
-label_path = ttk.Label(master=input_frame, text='Enter the path :')
-entry_path = ttk.Entry(master=input_frame)
+    # Window
+    window = ttk.Window(themename='flatly')
+    window.title('Moteur de recherche')
+    window.geometry('800x700')
+    window.resizable(True, True) 
 
-label_file = ttk.Label(master=input_frame, text='Enter the file name :')
-entry_file = ttk.Entry(master=input_frame)
+
+    # Logo frame
+    logo_frame = tk.Frame(window, width=800, height=70)
+    logo_frame.grid(row=0, column=0)
+    logo_frame.pack_propagate(False)
+    logo_widget = tk.Label(logo_frame, text='File Finder', font=("Times", 30) )
+    logo_widget.pack()
 
 
-button = ttk.Button(
-    master=input_frame, 
-    text='Recherche',
-    command=lambda: run_file_finder(entry_path.get(), entry_file.get())
+    # Image
+    # script_dir = os.path.dirname(__file__) if "__file__" in locals() else os.getcwd()
+    # image_path = os.path.join(script_dir, "folder.png")
+    # original_image = Image.open('folder.png')
+
+    # desired_size = (100, 100) 
+    # resized_image = original_image.resize(desired_size)
+    # logo_img = ImageTk.PhotoImage(resized_image)
+
+    # logo_widget = tk.Label(logo_frame, image=logo_img)
+    # logo_widget.image = logo_img
+    # logo_widget.pack()
+
+
+    # Input frame
+    input_frame = ttk.Frame(master=window)
+
+    label_path = ttk.Label(master=input_frame, text='Enter the path :')
+    entry_path = ttk.Entry(master=input_frame)
+
+    label_file = ttk.Label(master=input_frame, text='Enter the file name :')
+    entry_file = ttk.Entry(master=input_frame)
+
+
+    button = ttk.Button(
+        master=input_frame, 
+        text='Recherche',
+        command=lambda: run_file_finder(entry_path.get(), entry_file.get())
     )
 
-label_path.grid(row=0, column=0, padx=5, pady=5)
-entry_path.grid(row=0, column=1, padx=5, pady=5)
-label_file.grid(row=1, column=0, padx=5, pady=5)
-entry_file.grid(row=1, column=1, padx=5, pady=5)
-button.grid(row=3, column=0, columnspan=2, padx=10, pady=15, sticky='nsew')
-input_frame.grid(row=1, column=0)
+    label_path.grid(row=0, column=0, padx=5, pady=5)
+    entry_path.grid(row=0, column=1, padx=5, pady=5)
+    label_file.grid(row=1, column=0, padx=5, pady=5)
+    entry_file.grid(row=1, column=1, padx=5, pady=5)
+    button.grid(row=3, column=0, columnspan=2, padx=10, pady=15, sticky='nsew')
+    input_frame.grid(row=1, column=0)
 
 
-# Output frame
-output_frame = ttk.Frame(master=window)
-output_frame.grid(row=3, column=0)
+    # Output frame
+    output_frame = ttk.Frame(master=window)
+    output_frame.grid(row=3, column=0)
 
-result_text = tk.Text(output_frame, height=25, width=100, wrap=tk.WORD)
-result_text.pack(fill=tk.BOTH, expand=True)
+    result_text = tk.Text(output_frame, height=25, width=100, wrap=tk.WORD)
+    result_text.pack(fill=tk.BOTH, expand=True)
 
-window.mainloop()
+    window.mainloop()
 
 
 # creer le fichier executable : lire la ligne suivante dans le cmd
