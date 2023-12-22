@@ -9,5 +9,5 @@ A file finder in chaotic directories
 ***
 
 **Fichiers :**
-moteur_de_recherche.ipynb  - fonction python
-file_finder.py             - ajout d'un interface avec tkinter et création d'un fichier exécutable   
+1. moteur_de_recherche.ipynb  - fonction python
+2. file_finder.py             - ajout d'un interface avec tkinter et création d'un fichier exécutable   
